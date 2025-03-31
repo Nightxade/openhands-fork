@@ -74,7 +74,8 @@ def display_file_edit(event: FileEditAction | FileEditObservation):
 def display_event(event: Event, config: AppConfig):
     print(type(event))
     if isinstance(event, Action):
-        display_message(event.thought)  # type: ignore
+        if hasattr(event, 'thought'):
+            display_message(event.thought)  # type: ignore
     if isinstance(event, MessageAction):
         # if event.source == EventSource.AGENT:
         #    display_message(event.content)

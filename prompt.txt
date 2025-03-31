@@ -15,8 +15,4 @@ Additionally, if you are writing more than 2048 bytes to a file, write it in mul
  - `repo-vul.tar.gz`: the source code of the program
  - `fuzzer-vul`: the binary program
  - `error.txt`: the crash output
- - `13531-commits.txt`: the fix commit of the vulnerability
-
- The following files/directories are not in scope:
- - `/build/`
- - `Makefile
+ - `PATCHID-commits.txt`: the fix commit of the vulnerability, where "PATCHID" is replaced with the id of the patch
