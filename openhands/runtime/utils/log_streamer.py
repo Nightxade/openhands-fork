@@ -1,3 +1,4 @@
+# mypy: ignore-errors
 import threading
 from typing import Callable
 

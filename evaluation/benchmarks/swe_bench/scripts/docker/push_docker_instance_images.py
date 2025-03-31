@@ -25,10 +25,10 @@ EVAL_DOCKER_IMAGE_PREFIX='docker.io/xingyaoww/' python3 evaluation/swe_bench/scr
 
 import argparse
 
-import docker
 from datasets import load_dataset
 from tqdm import tqdm
 
+import docker
 from openhands.core.logger import openhands_logger as logger
 
 logger.setLevel('ERROR')

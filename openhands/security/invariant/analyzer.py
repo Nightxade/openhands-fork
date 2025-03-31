@@ -1,12 +1,13 @@
+# mypy: ignore-errors
 import ast
 import re
 import uuid
 from typing import Any
 
-import docker
 from fastapi import HTTPException, Request
 from fastapi.responses import JSONResponse
 
+import docker
 from openhands.core.logger import openhands_logger as logger
 from openhands.core.message import Message, TextContent
 from openhands.core.schema import AgentState

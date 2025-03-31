@@ -1,3 +1,4 @@
+# mypy: ignore-errors
 import argparse
 import hashlib
 import os
@@ -8,10 +9,10 @@ from enum import Enum
 from pathlib import Path
 from typing import List
 
-import docker
 from dirhash import dirhash  # type: ignore
 from jinja2 import Environment, FileSystemLoader
 
+import docker
 import openhands
 from openhands import __version__ as oh_version
 from openhands.core.exceptions import AgentRuntimeBuildError

@@ -6,11 +6,11 @@ from importlib.metadata import version
 from pathlib import Path
 from unittest.mock import ANY, MagicMock, mock_open, patch
 
-import docker
 import pytest
 import toml
 from pytest import TempPathFactory
 
+import docker
 import openhands
 from openhands import __version__ as oh_version
 from openhands.core.logger import openhands_logger as logger

@@ -238,3 +238,4 @@ containers/runtime/code
 ## custom
 workspace*/
 base*/
+traces/
