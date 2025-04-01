@@ -239,3 +239,4 @@ containers/runtime/code
 workspace*/
 base*/
 traces/
+results/
