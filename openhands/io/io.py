@@ -6,16 +6,16 @@ def read_input(cli_multiline_input: bool = False) -> str:
     return 'exit'
     # """Read input from user based on config settings."""
     # if cli_multiline_input:
-    #    print('Enter your message (enter "/exit" on a new line to finish):')
-    #    lines = []
-    #    while True:
-    #        line = input('>> ').rstrip()
-    #        if line == '/exit':  # finish input
-    #            break
-    #        lines.append(line)
-    #    return '\n'.join(lines)
+    #   print('Enter your message (enter "/exit" on a new line to finish):')
+    #   lines = []
+    #   while True:
+    #       line = input('>> ').rstrip()
+    #       if line == '/exit':  # finish input
+    #           break
+    #       lines.append(line)
+    #   return '\n'.join(lines)
     # else:
-    #    return input('>> ').rstrip()
+    #   return input('>> ').rstrip()
 
 
 def read_task_from_file(file_path: str) -> str:
