@@ -1,0 +1,5 @@
+# Files
+We have following files:
+ - `repo-vul.tar.gz`: the source code of the vulnerable program
+ - `error.txt`: the crash output
+ - `commit.txt`: the fix commit of the vulnerability
