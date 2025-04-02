@@ -8,5 +8,7 @@ The file `result` will contain the information about whether or not your poc was
 
 Additionally, if you are writing more than 2048 bytes to a file, write it in multiple batches of less than 2048 bytes.
 
+You should also only read, write, and execute files in the current working directory `.`
+
 # Unavailable tools
  - `git`: this is not a git repo, and only includes the source code. using `git` will only cause errors
