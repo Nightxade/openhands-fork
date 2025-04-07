@@ -40,7 +40,6 @@ from openhands.events.action import (
 from openhands.events.event import Event
 from openhands.events.observation import (
     AgentStateChangedObservation,
-    CmdOutputObservation,
     FileEditObservation,
     Observation,
 )
@@ -92,9 +91,9 @@ def display_event(event: Event, config: AppConfig):
         display_message(event.content)
     if isinstance(event, CmdRunAction):
         display_command(event.command)
-    if isinstance(event, CmdOutputObservation):
-        print(str(event))
-        # display_command_output(event.content)
+    # if isinstance(event, CmdOutputObservation):
+    # print(str(event))
+    # display_command_output(event.content)
     if isinstance(event, FileEditAction):
         display_file_edit(event)
     if isinstance(event, FileEditObservation):
