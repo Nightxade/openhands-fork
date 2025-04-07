@@ -4,6 +4,8 @@ import os
 from pathlib import Path
 from typing import Callable, Protocol
 
+from termcolor import colored
+
 import openhands.agenthub  # noqa F401 (we import this to get the agents registered)
 from openhands.controller.agent import Agent
 from openhands.controller.replay import ReplayManager
@@ -25,14 +27,82 @@ from openhands.core.setup import (
     initialize_repository_for_runtime,
 )
 from openhands.events import EventSource, EventStreamSubscriber
-from openhands.events.action import MessageAction, NullAction
-from openhands.events.action.action import Action
+from openhands.events.action import (
+    Action,
+    ActionConfirmationStatus,
+    CmdRunAction,
+    FileEditAction,
+    MessageAction,
+    NullAction,
+)
+
+# from openhands.events.action.action import Action
 from openhands.events.event import Event
-from openhands.events.observation import AgentStateChangedObservation
+from openhands.events.observation import (
+    AgentStateChangedObservation,
+    CmdOutputObservation,
+    FileEditObservation,
+    Observation,
+)
 from openhands.io import read_input, read_task
 from openhands.memory.memory import Memory
 from openhands.runtime.base import Runtime
 from openhands.utils.async_utils import call_async_from_sync
+
+
+def display_message(message: str):
+    print(colored('🤖 ' + message + '\n', 'yellow'))
+
+
+def display_command(command: str):
+    print('❯ ' + colored(command + '\n', 'green'))
+
+
+def display_confirmation(confirmation_state: ActionConfirmationStatus):
+    if confirmation_state == ActionConfirmationStatus.CONFIRMED:
+        print(colored('✅ ' + confirmation_state + '\n', 'green'))
+    elif confirmation_state == ActionConfirmationStatus.REJECTED:
+        print(colored('❌ ' + confirmation_state + '\n', 'red'))
+    else:
+        print(colored('⏳ ' + confirmation_state + '\n', 'yellow'))
+
+
+def display_command_output(output: str):
+    lines = output.split('\n')
+    for line in lines:
+        if line.startswith('[Python Interpreter') or line.startswith('openhands@'):
+            # TODO: clean this up once we clean up terminal output
+            continue
+        print(colored(line, 'blue'))
+    print('\n')
+
+
+def display_file_edit(event: FileEditAction | FileEditObservation):
+    print(colored(str(event), 'green'))
+
+
+def display_event(event: Event, config: AppConfig):
+    print(colored(type(event), 'red'))
+    if isinstance(event, Action):
+        if hasattr(event, 'thought'):
+            display_message(event.thought)  # type: ignore
+    if isinstance(event, MessageAction):
+        # if event.source == EventSource.AGENT:
+        #    display_message(event.content)
+        display_message(event.content)
+    if isinstance(event, CmdRunAction):
+        display_command(event.command)
+    if isinstance(event, CmdOutputObservation):
+        print(str(event))
+        # display_command_output(event.content)
+    if isinstance(event, FileEditAction):
+        display_file_edit(event)
+    if isinstance(event, FileEditObservation):
+        display_file_edit(event)
+    if isinstance(event, Observation):
+        print(str(event))
+    if hasattr(event, 'confirmation_state') and config.security.confirmation_mode:
+        display_confirmation(event.confirmation_state)
 
 
 class FakeUserResponseFunc(Protocol):
@@ -50,7 +120,7 @@ async def run_controller(
     sid: str | None = None,
     runtime: Runtime | None = None,
     agent: Agent | None = None,
-    exit_on_message: bool = False,
+    exit_on_message: bool = True,
     fake_user_response_fn: FakeUserResponseFunc | None = None,
     headless_mode: bool = True,
     memory: Memory | None = None,
@@ -164,6 +234,7 @@ async def run_controller(
         event_stream.add_event(initial_user_action, EventSource.USER)
 
     def on_event(event: Event):
+        display_event(event, config)
         if isinstance(event, AgentStateChangedObservation):
             if event.agent_state == AgentState.AWAITING_USER_INPUT:
                 if exit_on_message:
