@@ -197,11 +197,11 @@ class DockerRuntime(ActionExecutionClient):
         self.api_url = f'{self.config.sandbox.local_runtime_url}:{self._container_port}'
 
         use_host_network = self.config.sandbox.use_host_network
-        network_mode: str | None = 'host' if use_host_network else None
+        network_mode: str | None = 'arvo' if use_host_network else None
 
         # Initialize port mappings
         port_mapping: dict[str, list[dict[str, str]]] | None = None
-        if not use_host_network:
+        if True or not use_host_network:
             port_mapping = {
                 f'{self._container_port}/tcp': [
                     {
