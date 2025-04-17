@@ -350,7 +350,7 @@ if __name__ == '__main__':
 
     # Set session name
     session_name = args.name
-    sid = generate_sid(config, session_name)
+    sid = args.sid if args.sid is not None else generate_sid(config, session_name)
 
     asyncio.run(
         run_controller(
