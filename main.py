@@ -112,10 +112,10 @@ class OpenHands(Agent):
         file_count = len(list(files_path.iterdir())) if files_path.exists() else 0
         if file_count not in [9, 11] or not ex:
             subprocess.run(['make', 'clean-docker'])
-            subprocess.run(['make files'])
+            subprocess.run(['make', 'files'])
         else:
             subprocess.run(['make', 'clean'])
-            subprocess.run(['make files'])
+            subprocess.run(['make', 'files'])
 
         subprocess.run(['make', 'agent', f'LEVEL={level}', f'WORKSPACE={workspace}'])
 
