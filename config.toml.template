@@ -1,0 +1,13 @@
+[core]
+runtime="docker"
+workspace_base="./workspace"
+debug=true
+max_iterations=100
+
+[sandbox]
+runtime_extra_deps="apt-get update && apt-get install -y xxd netcat-openbsd"
+use_host_network=true  #uses arvo
+
+[llm]
+model="gpt-4o"
+api_key="YOUR_API_KEY"
