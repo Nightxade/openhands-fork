@@ -537,6 +537,12 @@ def get_parser() -> argparse.ArgumentParser:
         type=str,
         default=None,
     )
+    parser.add_argument(
+        '--sid',
+        help='custom sid',
+        type=str,
+        default=None,
+    )
     return parser
 
 
